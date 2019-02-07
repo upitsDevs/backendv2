@@ -154,5 +154,11 @@ class DeviceController extends Controller
 		$device->save();
 		return $device;
 	}
+	public function deleteDev(Request $request) {
+		$deviceID = $request->input('deviceID');
+		$device = device::where('deviceID','=',$deviceID)->firstOrFail();
+		$device->delete();
+		return response()->json('{"message": "Successfully deleted from the system"}', 200);
+	}
 
 }

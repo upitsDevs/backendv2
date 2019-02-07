@@ -42,6 +42,7 @@ $api = app(Router::class);
                 // ->middleware(['jwt.auth','App\Http\Middleware\deviceUser'])
                 //admin panel
                 $api->post('/changeState','App\Http\Controllers\DeviceController@changeState')->middleware(['jwt.auth','App\Http\Middleware\admin']);
+                $api->post('/deleteDev','App\Http\Controllers\DeviceController@deleteDev')->middleware(['jwt.auth','App\Http\Middleware\admin']);
                 $api->get('/devices','App\Http\Controllers\DeviceController@list')->middleware(['jwt.auth','App\Http\Middleware\admin']);
                 $api->post('/setPassword','App\Http\Controllers\DeviceController@set_passsword');
         });
