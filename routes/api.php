@@ -39,6 +39,7 @@ $api = app(Router::class);
                 $api->get('/checkUpdate','App\Http\Controllers\DeviceController@checkUpdate');
                 // User / Device
                 $api->post('/single','App\Http\Controllers\DeviceController@getDevice');
+                $api->post('/mqtt','App\Http\Controllers\DeviceController@mqtt')->middleware(['jwt.auth','App\Http\Middleware\admin']);
                 // ->middleware(['jwt.auth','App\Http\Middleware\deviceUser'])
                 //admin panel
                 $api->post('/changeState','App\Http\Controllers\DeviceController@changeState')->middleware(['jwt.auth','App\Http\Middleware\admin']);

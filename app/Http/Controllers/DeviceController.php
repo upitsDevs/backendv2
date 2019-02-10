@@ -8,6 +8,8 @@ use Hash;
 use App\detection;
 use Carbon\Carbon;
 use Auth;
+use GuzzleHttp\Psr7\Request as REQ;
+use GuzzleHttp;
 
 class DeviceController extends Controller
 {
@@ -159,6 +161,16 @@ class DeviceController extends Controller
 		$device = device::where('deviceID','=',$deviceID)->firstOrFail();
 		$device->delete();
 		return response()->json('{"message": "Successfully deleted from the system"}', 200);
+	}
+	public function mqtt(Request $payload) {		
+		$url = $payload->input('uri');
+		$headers = ['authorization' => env('MQTT_KEY')];
+		$client = new GuzzleHttp\Client(['base_uri' => 'http://www.upits.services:8080/api/v3']);
+		$body = '';
+		$thereq = new REQ('GET', 'http://www.upits.services:8080/api/v3/' . $url , $headers, $body);
+		$response = $client->send($thereq);
+		
+		return response($response->getBody(),200);
 	}
 
 }
